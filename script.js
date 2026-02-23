@@ -35,10 +35,10 @@ function toggleStyle(id) {
     interviewFilterBtn.classList.add('bg-gray-300', 'text-black')
     rejectedFilterBtn.classList.add('bg-gray-300', 'text-black')
 
-    // if any button has black then remove
-    allFilterBtn.classList.remove('bg-black', 'text-white')
-    interviewFilterBtn.classList.remove('bg-black', 'text-white')
-    rejectedFilterBtn.classList.remove('bg-black', 'text-white')
+    // if any button has blue then remove
+    allFilterBtn.classList.remove('bg-[#4a90d9]', 'text-white')
+    interviewFilterBtn.classList.remove('bg-[#4a90d9]', 'text-white')
+    rejectedFilterBtn.classList.remove('bg-[#4a90d9]', 'text-white')
 
     // console.log(id);
     const selected = document.getElementById(id)//this is the button that clicked for filter
@@ -49,99 +49,107 @@ function toggleStyle(id) {
 
     // adding black bg for current button
     selected.classList.remove('bg-gray-300', 'text-black')
-    selected.classList.add('bg-black', 'text-white')
+    selected.classList.add('bg-[#4a90d9]', 'text-white')
     // step 1 finish
 
     // show and hidden particular section
     // step 4 start
-    // filtering while clicking the filter button (All, Thriving, Struggling)
-    if (id == 'thriving-filter-btn') {
+    // filtering while clicking the filter button (All, Interview, Rejected)
+    if (id == 'interview-filter-btn') {
         allCardSection.classList.add('hidden');
         filterSection.classList.remove('hidden')
-        renderThriving()
+        renderInterview()
     } else if (id == 'all-filter-btn') {
         allCardSection.classList.remove('hidden');
         filterSection.classList.add('hidden')
-    } else if (id == 'struggling-filter-btn') {
+    } else if (id == 'rejected-filter-btn') {
         allCardSection.classList.add('hidden');
         filterSection.classList.remove('hidden')
-        renderStruggling()
+        renderRejected()
     }
 }
 
 
 // step 2 delegation
 mainContainer.addEventListener('click', function (event) {
-    if (event.target.classList.contains('thriving-btn')) {
+    if (event.target.classList.contains('interview-btn')) {
         const parenNode = event.target.parentNode.parentNode;
 
-        const plantName = parenNode.querySelector('.plantName').innerText
-        const light = parenNode.querySelector('.light').innerText
-        const water = parenNode.querySelector('.water').innerText
+        const companyName = parenNode.querySelector('.companyName').innerText
+        const postName = parenNode.querySelector('.postName').innerText
+        const location = parenNode.querySelector('.location').innerText
+        const type = parenNode.querySelector('.type').innerText
+        const sal = parenNode.querySelector('.sal').innerText
         const status = parenNode.querySelector('.status').innerText
         const notes = parenNode.querySelector('.notes').innerText
 
-        parenNode.querySelector('.status').innerText = 'Thrive'
+        parenNode.querySelector('.status').innerText = 'INTERVIEW'
 
         const cardInfo = {
-            plantName,
-            light,
-            water,
-            status: 'Thrive',
+            companyName,
+            postName,
+            location,
+            type,
+            sal,
+            status: 'INTERVIEW',
             notes
         }
 
-        const plantExist = thrivingList.find(item => item.plantName == cardInfo.plantName)
+        const companyExist = interviewList.find(item => item.companyName == cardInfo.companyName)
 
-        if (!plantExist) {
-            thrivingList.push(cardInfo)
+        if (!companyExist) {
+            interviewList.push(cardInfo)
         }
 
         // step 2 finish
-        // removing the plant from struggling list
-        strugglingList = strugglingList.filter(item => item.plantName != cardInfo.plantName)
+        // removing the company from struggling list
+        strugglingList = strugglingList.filter(item => item.companyName != cardInfo.companyName)
 
         // after remove rerender the html
-        if (currentStatus == 'struggling-filter-btn') {
-            renderStruggling()
+        if (currentStatus == 'rejected-filter-btn') {
+            renderRejected()
         }
 
          calculateCount()
 
 
-    } else if (event.target.classList.contains('struggling-btn')) {
+    } else if (event.target.classList.contains('rejected-btn')) {
         const parenNode = event.target.parentNode.parentNode;
 
-        const plantName = parenNode.querySelector('.plantName').innerText
-        const light = parenNode.querySelector('.light').innerText
-        const water = parenNode.querySelector('.water').innerText
+        const companyName = parenNode.querySelector('.companyName').innerText
+        const postName = parenNode.querySelector('.postName').innerText
+        const location = parenNode.querySelector('.location').innerText
+        const type = parenNode.querySelector('.type').innerText
+        const sal = parenNode.querySelector('.sal').innerText
         const status = parenNode.querySelector('.status').innerText
         const notes = parenNode.querySelector('.notes').innerText
 
-        parenNode.querySelector('.status').innerText = 'Struggle'
+        parenNode.querySelector('.status').innerText = 'REJECTED'
 
         const cardInfo = {
-            plantName,
-            light,
-            water,
-            status: 'Struggle',
+            companyName,
+            location,
+            postName,
+            type,
+            sal,
+            status: 'REJECTED',
             notes
         }
 
-        const plantExist = strugglingList.find(item => item.plantName == cardInfo.plantName)
+        const companyExist = rejectedList.find(item => item.companyName == cardInfo.companyName)
 
-        if (!plantExist) {
-            strugglingList.push(cardInfo)
+        if (!companyExist) {
+            rejectedList.push(cardInfo)
         }
 
-        // removing the plant from thriving list
-        thrivingList = thrivingList.filter(item => item.plantName != cardInfo.plantName)
+        // removing the company from thriving list
+        interviewList = interviewList.filter(item => item.companyName != cardInfo.companyName)
 
         // console.log(thrivingList);
 
         // after remove rerender the html
-        if (currentStatus == "thriving-filter-btn") {
-            renderThriving();
+        if (currentStatus == "interview-filter-btn") {
+            renderInterview();
         }
         calculateCount()
 
@@ -150,13 +158,13 @@ mainContainer.addEventListener('click', function (event) {
 })
 
 // step 3  html file create
-function renderThriving() {
+function renderInterview() {
     // make the filterSection empty every time
     filterSection.innerHTML = ''
 
     // crating innerHtml
-    for (let thrive of thrivingList) {
-        console.log(thrive);
+    for (let interview of interviewList) {
+        console.log(interview);
 
         let div = document.createElement('div');
         div.className = 'card flex justify-between border p-8'
@@ -164,39 +172,40 @@ function renderThriving() {
          <div class="space-y-6">
                     <!-- part 1 -->
                     <div>
-                        <p class="plantName text-4xl">${thrive.plantName}</p>
-                        <p class="latinName">Latin Name</p>
+                        <p class="companyName text-[18px]">${interview.companyName}</p>
+                        <p class="postName text-[16px]">${interview.postName}</p>
                     </div>
 
                     <!-- part 2 -->
-                    <div class="flex gap-2">
-                        <p class="light bg-gray-200 px-5">Bright Indicate</p>
-                        <p class="water bg-gray-200 px-5">weekly</p>
+                    <div class="flex gap-3">
+                        <p class="location">${interview.location}</p>
+                        <p class="type "> ${interview.type}</p>
+                        <p class="sal">${interview.sal}</p>
                     </div>
                     <!-- part 3 -->
-                     <p class="status">${thrive.status}</p>
-                     <p class="notes">New leaf unfurling by the east window.</p>
+                     <p class="status ">${interview.status}</p>
+                     <p class="notes">${interview.notes}</p>
 
-                     <div class="flex gap-5">
-                        <button class="thriving-btn bg-green-200 px-4 py-2">Thrive</button>
-                        <button class="struggling-btn bg-red-200 px-4 py-2">Struggle</button>
-                     </div>
-                </div>
+                    <div class="flex gap-5">
+                            <button class="interview-btn border-2 border-green-500 px-4 py-2 rounded-md text-green-500">INTERVIEW</button>
+                            <button class="rejected-btn border-2 border-red-500 px-4 py-2 rounded-md text-red-500">REJECTED</button>
+                        </div>
+                    </div>
 
                 <!-- main part 2 -->
                 <div>
-                    <button class="btn-delete bg-red-200 text-red-600 px-4 py-2">Delete</button>
+                    <button class="btn-delete border rounded-full px-1 py-1 w-[32px] h-[32px] text-gray-400"><span><i class="fa-regular fa-trash-can"></i></span></button>
                 </div>
         `
         filterSection.appendChild(div)
     }
 }
 
-function renderStruggling() {
+function renderRejected() {
     // make the filterSection empty every time
     filterSection.innerHTML = ''
     // crating innerHtml
-    for (let struggle of strugglingList) {
+    for (let rejected of rejectedList) {
 
         let div = document.createElement('div');
         div.className = 'card flex justify-between border p-8'
@@ -204,28 +213,29 @@ function renderStruggling() {
          <div class="space-y-6">
                     <!-- part 1 -->
                     <div>
-                        <p class="plantName text-4xl">${struggle.plantName}</p>
-                        <p class="latinName">Latin Name</p>
+                        <p class="companyName text-[18px]">${rejected.companyName}</p>
+                        <p class="postName text-[16px]">${rejected.postName}</p>
                     </div>
 
                     <!-- part 2 -->
-                    <div class="flex gap-2">
-                        <p class="light bg-gray-200 px-5">Bright Indicate</p>
-                        <p class="water bg-gray-200 px-5">weekly</p>
+                    <div class="flex gap-3">
+                        <p class="location">${rejected.location}</p>
+                        <p class="type "> ${rejected.type}</p>
+                        <p class="sal">${rejected.sal}</p>
                     </div>
                     <!-- part 3 -->
-                     <p class="status">${struggle.status}</p>
-                     <p class="notes">New leaf unfurling by the east window.</p>
+                     <p class="status">${rejected.status}</p>
+                     <p class="notes">${rejected.notes}</p>
 
                      <div class="flex gap-5">
-                        <button class="thriving-btn bg-green-200 px-4 py-2">Thrive</button>
-                        <button class="struggling-btn bg-red-200 px-4 py-2">Struggle</button>
-                     </div>
-                </div>
+                            <button class="interview-btn border-2 border-green-500 px-4 py-2 rounded-md text-green-500">INTERVIEW</button>
+                            <button class="rejected-btn border-2 border-red-500 px-4 py-2 rounded-md text-red-500">REJECTED</button>
+                        </div>
+                    </div>
 
                 <!-- main part 2 -->
                 <div>
-                    <button class="btn-delete bg-red-200 text-red-600 px-4 py-2">Delete</button>
+                    <button class="btn-delete border rounded-full px-1 py-1 w-[32px] h-[32px] text-gray-400"><span><i class="fa-regular fa-trash-can"></i></span></button>
                 </div>
         `
         filterSection.appendChild(div)

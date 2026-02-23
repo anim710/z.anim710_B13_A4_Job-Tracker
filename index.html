@@ -20,7 +20,7 @@
 </head>
 <body class="min-h-screen p-6">
 
-  <div class="w-[80%] mx-auto">
+<main class="w-[80%] mx-auto">
 
     <!-- Title -->
     <h1 class="text-3xl font-semibold text-gray-700 mb-4">Job Application Tracker</h1>
@@ -29,15 +29,15 @@
     <div class="grid grid-cols-3 gap-3 mb-6">
       <div class="bg-white rounded-lg border border-gray-100 px-4 py-3">
         <p class="text-[14px] text-gray-600 mb-1">Total</p>
-        <p class="text-lg font-bold text-gray-800" id="statTotal">8</p>
+        <p class="text-lg font-bold text-gray-800" id="total">0</p>
       </div>
       <div class="bg-white rounded-lg border border-gray-100 px-4 py-3">
         <p class="text-[14px] text-gray-600 mb-1">Interview</p>
-        <p class="text-lg font-bold" style="color:#22c9a0" id="statActive">6</p>
+        <p class="text-lg font-bold" style="color:#22c9a0" id="interviewCount">0</p>
       </div>
       <div class="bg-white rounded-lg border border-gray-100 px-4 py-3">
         <p class="text-[14px] text-gray-600 mb-1">Rejected</p>
-        <p class="text-lg font-bold" style="color:#f47f7f" id="statCount">2</p>
+        <p class="text-lg font-bold" style="color:#f47f7f" id="rejectedCount">0</p>
       </div>
     </div>
 
@@ -54,9 +54,9 @@
 
     <!-- Tabs -->
     <div class="flex gap-2 mb-4">
-      <button id="tab-All" onclick="filterTab('All')" class="px-8 py-2 rounded-md text-xs font-medium text-white" style="background:#4a90d9">All</button>
-      <button id="tab-Active" onclick="filterTab('Active')" class="px-6 py-2 rounded-md text-xs font-medium text-gray-400 bg-white border border-gray-200">Interview</button>
-      <button id="tab-Closed" onclick="filterTab('Closed')" class="px-6 py-2 rounded-md text-xs font-medium text-gray-400 bg-white border border-gray-200">Rejected</button>
+      <button id="all-filter-btn" onclick="toggleStyle('all-filter-btn')" class="px-8 py-2 rounded-md text-xs font-medium text-white bg-[#4a90d9]" >All</button>
+      <button id="interview-filter-btn" onclick="toggleStyle('interview-filter-btn')" class="px-6 py-2 rounded-md text-xs font-medium text-gray-500 bg-gray-100 border border-gray-200">Interview</button>
+      <button id="rejected-filter-btn" onclick="toggleStyle('rejected-filter-btn')" class="px-6 py-2 rounded-md text-xs font-medium text-gray-500 bg-gray-100 border border-gray-200">Rejected</button>
     </div>
 
 
@@ -163,8 +163,7 @@
                     <div>
 
                        <p class="status bg-[#eef4ff] px-4 py-2 rounded-md w-[125px] h-[36px] text-[14px] font-semibold mb-2">NOT APPLIED</p>
-                     <p class="notes">Transform complex data into compelling visualizations. Required skills: D3.js, React, and strong analytical thinking.
-</p>
+                     <p class="notes">Transform complex data into compelling visualizations. Required skills: D3.js, React, and strong analytical thinking.</p>
                     </div>
                     
 
@@ -366,7 +365,8 @@
                     <button class="btn-delete border rounded-full px-1 py-1 w-[32px] h-[32px] text-gray-400"><span><i class="fa-regular fa-trash-can"></i></span></button>
                 </div>
             </div>
-
+        </section>
+    </main>    
 <script src="script.js"></script>
 </body>
 </html>
