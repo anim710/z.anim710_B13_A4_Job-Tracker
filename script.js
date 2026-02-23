@@ -103,7 +103,7 @@ mainContainer.addEventListener('click', function (event) {
 
         // step 2 finish
         // removing the company from struggling list
-        strugglingList = strugglingList.filter(item => item.companyName != cardInfo.companyName)
+        rejectedList = rejectedList.filter(item => item.companyName != cardInfo.companyName)
 
         // after remove rerender the html
         if (currentStatus == 'rejected-filter-btn') {
@@ -183,7 +183,7 @@ function renderInterview() {
                         <p class="sal">${interview.sal}</p>
                     </div>
                     <!-- part 3 -->
-                     <p class="status ">${interview.status}</p>
+                     <p class="status border-2 border-green-500 px-4 py-2 rounded-md text-green-500 w-[110px] ">${interview.status}</p>
                      <p class="notes">${interview.notes}</p>
 
                     <div class="flex gap-5">
@@ -224,7 +224,7 @@ function renderRejected() {
                         <p class="sal">${rejected.sal}</p>
                     </div>
                     <!-- part 3 -->
-                     <p class="status">${rejected.status}</p>
+                     <p class="status border-2 border-red-500 px-4 py-2 rounded-md text-red-500 w-[110px]">${rejected.status}</p>
                      <p class="notes">${rejected.notes}</p>
 
                      <div class="flex gap-5">
