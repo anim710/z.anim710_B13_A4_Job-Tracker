@@ -1,11 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job-Tracker</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Application Tracker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+<!-- icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+  <style>
+    body { background: #f8fafc;  font-family: "Geist", sans-serif; }
+  </style>
 </head>
-<body>
-    <h1>Job Tracker</h1>
+<body class="min-h-screen p-6">
+
+  <div class="w-[80%] mx-auto">
+
+    <!-- Title -->
+    <h1 class="text-3xl font-semibold text-gray-700 mb-4">Job Application Tracker</h1>
+
+    <!-- Stats Row -->
+    <div class="grid grid-cols-3 gap-3 mb-6">
+      <div class="bg-white rounded-lg border border-gray-100 px-4 py-3">
+        <p class="text-[14px] text-gray-600 mb-1">Total</p>
+        <p class="text-lg font-bold text-gray-800" id="statTotal">8</p>
+      </div>
+      <div class="bg-white rounded-lg border border-gray-100 px-4 py-3">
+        <p class="text-[14px] text-gray-600 mb-1">Interview</p>
+        <p class="text-lg font-bold" style="color:#22c9a0" id="statActive">6</p>
+      </div>
+      <div class="bg-white rounded-lg border border-gray-100 px-4 py-3">
+        <p class="text-[14px] text-gray-600 mb-1">Rejected</p>
+        <p class="text-lg font-bold" style="color:#f47f7f" id="statCount">2</p>
+      </div>
+    </div>
+
+    <!-- Section Header -->
+    <div class="flex items-center justify-between mb-3">
+      <p class="text-xl font-semibold text-black-400">Available Jobs</p>
+      <!-- <button class="flex items-center gap-1 text-xs text-gray-400 hover:text-gray-600">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="16" y2="12"/><line x1="4" y1="18" x2="12" y2="18"/>
+        </svg>
+        Filter
+      </button> -->
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-2 mb-4">
+      <button id="tab-All" onclick="filterTab('All')" class="px-8 py-2 rounded-md text-xs font-medium text-white" style="background:#4a90d9">All</button>
+      <button id="tab-Active" onclick="filterTab('Active')" class="px-6 py-2 rounded-md text-xs font-medium text-gray-400 bg-white border border-gray-200">Interview</button>
+      <button id="tab-Closed" onclick="filterTab('Closed')" class="px-6 py-2 rounded-md text-xs font-medium text-gray-400 bg-white border border-gray-200">Rejected</button>
+    </div>
+
+
 </body>
 </html>
