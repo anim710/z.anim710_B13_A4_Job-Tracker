@@ -10,6 +10,7 @@ let currentStatus = 'all'
 let total = document.getElementById('total');
 let interviewCount = document.getElementById('interviewCount')
 let rejectedCount = document.getElementById('rejectedCount');
+let jobCountDisplay = document.getElementById('job-count');
 
 const allFilterBtn = document.getElementById('all-filter-btn')
 const interviewFilterBtn = document.getElementById('interview-filter-btn')
@@ -40,7 +41,21 @@ function calculateCount() {
     }
 }
 
+// Update job count display based on current filter
+function updateJobCount() {
+    const totalJobs = allCardSection.querySelectorAll('.card').length;
+    
+    if (currentStatus === 'all') {
+        jobCountDisplay.innerText = `${totalJobs} jobs`;
+    } else if (currentStatus === 'interview-filter-btn') {
+        jobCountDisplay.innerText = `${interviewList.length} of ${totalJobs} jobs`;
+    } else if (currentStatus === 'rejected-filter-btn') {
+        jobCountDisplay.innerText = `${rejectedList.length} of ${totalJobs} jobs`;
+    }
+}
+
 calculateCount()
+updateJobCount()
 
 function renderEmptyState() {
     return `
@@ -55,9 +70,9 @@ function renderEmptyState() {
 // step 1;
 function toggleStyle(id) {
     // adding gray bg for all
-    allFilterBtn.classList.add('bg-gray-300', 'text-black')
-    interviewFilterBtn.classList.add('bg-gray-300', 'text-black')
-    rejectedFilterBtn.classList.add('bg-gray-300', 'text-black')
+    allFilterBtn.classList.add('bg-gray-100', 'text-gray-500', 'border', 'border-gray-200')
+    interviewFilterBtn.classList.add('bg-gray-100', 'text-gray-500', 'border', 'border-gray-200')
+    rejectedFilterBtn.classList.add('bg-gray-100', 'text-gray-500', 'border', 'border-gray-200')
 
     // if any button has blue then remove
     allFilterBtn.classList.remove('bg-[#4a90d9]', 'text-white')
@@ -72,7 +87,7 @@ function toggleStyle(id) {
     // console.log(selected);
 
     // adding black bg for current button
-    selected.classList.remove('bg-gray-300', 'text-black')
+    selected.classList.remove('bg-gray-100', 'text-gray-500', 'border', 'border-gray-200')
     selected.classList.add('bg-[#4a90d9]', 'text-white')
     // step 1 finish
 
@@ -91,6 +106,8 @@ function toggleStyle(id) {
         filterSection.classList.remove('hidden')
         renderRejected()
     }
+    // Update job count after filter change
+    updateJobCount()
 }
 
 
@@ -135,6 +152,7 @@ mainContainer.addEventListener('click', function (event) {
         }
 
          calculateCount()
+         updateJobCount()
 
 
     } else if (event.target.classList.contains('rejected-btn')) {
@@ -176,6 +194,7 @@ mainContainer.addEventListener('click', function (event) {
             renderInterview();
         }
         calculateCount()
+        updateJobCount()
 
     }
 
@@ -192,6 +211,7 @@ mainContainer.addEventListener('click', function (event) {
     else if (currentStatus === 'rejected-filter-btn') renderRejected();
 
     calculateCount();
+    updateJobCount()
 }
 
 })
