@@ -143,8 +143,26 @@ mainContainer.addEventListener('click', function (event) {
         }
 
         // step 2 finish
-        // removing the company from struggling list
+        // removing the company from rejected list
         rejectedList = rejectedList.filter(item => item.companyName != cardInfo.companyName)
+
+    //Update or add to interview list
+    const existingIndex = interviewList.findIndex(item => item.companyName == cardInfo.companyName)
+    if (existingIndex >= 0) {
+        interviewList[existingIndex] = cardInfo    //Updates existing entry
+    } else {
+        interviewList.push(cardInfo)
+    }
+
+    //Update status in All section cards
+    const allCards = allCardSection.querySelectorAll('.card');
+    allCards.forEach(card => {
+        if (card.querySelector('.companyName').innerText === companyName) {
+            card.querySelector('.status').innerText = 'INTERVIEW'
+            card.querySelector('.status').className = 'status border-2 border-green-500 px-4 py-2 rounded-md text-green-500 w-[125px] h-[36px] text-[14px] font-semibold mb-2';
+        }
+    })
+
 
         // after remove rerender the html
         if (currentStatus == 'rejected-filter-btn') {
@@ -187,8 +205,23 @@ mainContainer.addEventListener('click', function (event) {
         // removing the company from thriving list
         interviewList = interviewList.filter(item => item.companyName != cardInfo.companyName)
 
-        // console.log(thrivingList);
+    // console.log(thrivingList);
+    //Update or add to rejected list
+    const existingIndex = rejectedList.findIndex(item => item.companyName == cardInfo.companyName)
+    if (existingIndex >= 0) {
+        rejectedList[existingIndex] = cardInfo    //Updates existing entry
+    } else {
+        rejectedList.push(cardInfo)
+    }
 
+    //Update status in All section cards
+    const allCards = allCardSection.querySelectorAll('.card');
+    allCards.forEach(card => {
+        if (card.querySelector('.companyName').innerText === companyName) {
+            card.querySelector('.status').innerText = 'REJECTED'
+            card.querySelector('.status').className = 'status border-2 border-red-500 px-4 py-2 rounded-md text-red-500 w-[125px] h-[36px] text-[14px] font-semibold mb-2';
+        }
+    })
         // after remove rerender the html
         if (currentStatus == "interview-filter-btn") {
             renderInterview();
