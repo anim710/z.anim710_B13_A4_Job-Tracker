@@ -20,13 +20,37 @@ const mainContainer = document.querySelector('main')
 const filterSection = document.getElementById('filtered-section')
 
 
+// function calculateCount() {
+//     total.innerText = allCardSection.children.length //3
+//     interviewCount.innerText = interviewList.length
+//     rejectedCount.innerText = rejectedList.length
+// }
+
 function calculateCount() {
-    total.innerText = allCardSection.children.length //3
-    interviewCount.innerText = interviewList.length
-    rejectedCount.innerText = rejectedList.length
+    const cards = allCardSection.querySelectorAll('.card');
+    total.innerText = cards.length;
+    interviewCount.innerText = interviewList.length;
+    rejectedCount.innerText = rejectedList.length;
+
+    const emptyState = document.getElementById('empty-state');
+    if (cards.length === 0) {
+        emptyState.classList.remove('hidden');
+    } else {
+        emptyState.classList.add('hidden');
+    }
 }
 
 calculateCount()
+
+function renderEmptyState() {
+    return `
+        <div class="flex flex-col items-center justify-center py-20 text-center">
+            <span><img src="jobs.png" alt="" srcset=""></span>
+            <p class="text-lg font-semibold text-gray-700">No jobs available</p>
+            <p class="text-sm text-gray-400">Check back soon for new job opportunities</p>
+        </div>
+    `
+}
 
 // step 1;
 function toggleStyle(id) {
@@ -84,7 +108,7 @@ mainContainer.addEventListener('click', function (event) {
         const notes = parenNode.querySelector('.notes').innerText
 
         parenNode.querySelector('.status').innerText = 'INTERVIEW'
-
+        parenNode.querySelector('.status').className = 'status border-2 border-green-500 px-4 py-2 rounded-md text-green-500 w-[125px] h-[36px] text-[14px] font-semibold mb-2';
         const cardInfo = {
             companyName,
             postName,
@@ -125,7 +149,7 @@ mainContainer.addEventListener('click', function (event) {
         const notes = parenNode.querySelector('.notes').innerText
 
         parenNode.querySelector('.status').innerText = 'REJECTED'
-
+        parenNode.querySelector('.status').className = 'status border-2 border-red-500 px-4 py-2 rounded-md text-red-500 w-[125px] h-[36px] text-[14px] font-semibold mb-2';
         const cardInfo = {
             companyName,
             location,
@@ -155,6 +179,21 @@ mainContainer.addEventListener('click', function (event) {
 
     }
 
+    else if (event.target.closest('.btn-delete')) {
+    const card = event.target.closest('.card');
+    const companyName = card.querySelector('.companyName').innerText;
+
+    interviewList = interviewList.filter(item => item.companyName !== companyName);
+    rejectedList = rejectedList.filter(item => item.companyName !== companyName);
+
+    card.remove();
+
+    if (currentStatus === 'interview-filter-btn') renderInterview();
+    else if (currentStatus === 'rejected-filter-btn') renderRejected();
+
+    calculateCount();
+}
+
 })
 
 // step 3  html file create
@@ -162,6 +201,10 @@ function renderInterview() {
     // make the filterSection empty every time
     filterSection.innerHTML = ''
 
+    if (interviewList.length === 0) {
+    filterSection.innerHTML = renderEmptyState();
+    return;
+    }
     // crating innerHtml
     for (let interview of interviewList) {
         console.log(interview);
@@ -204,6 +247,10 @@ function renderInterview() {
 function renderRejected() {
     // make the filterSection empty every time
     filterSection.innerHTML = ''
+    if (rejectedList.length === 0) {
+    filterSection.innerHTML = renderEmptyState();
+    return;
+    }
     // crating innerHtml
     for (let rejected of rejectedList) {
 
